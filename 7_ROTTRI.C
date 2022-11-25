@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <conio.h>
+#include <graphics.h>
+#include <process.h>
+#include <math.h>
+
+void triangle(int x1, int y1, int x2, int y2, int x3, int y3)
+{
+    line(x1, y1, x2, y2);
+    line(x2, y2, x3, y3);
+    line(x3, y3, x1, y1);
+}
+
+void Rotate(int x1, int y1, int x2, int y2, int x3, int y3, float thita)
+{
+    int x, y, a1, b1, a2, b2, a3, b3, p = x2, q = y2;
+    float Angle;
+    cleardevice();
+    Angle = (thita * 3.14) / 180;
+    a1 = p + (x1 - p) * cos(Angle) - (y1 - q) * sin(Angle); // int = int + int*float + int*float
+    b1 = q + (x1 - p) * sin(Angle) + (y1 - q) * cos(Angle);
+    a2 = p + (x2 - p) * cos(Angle) - (y2 - q) * sin(Angle);
+    b2 = q + (x2 - p) * sin(Angle) + (y2 - q) * cos(Angle);
+    a3 = p + (x3 - p) * cos(Angle) - (y3 - q) * sin(Angle);
+    b3 = q + (x3 - p) * sin(Angle) + (y3 - q) * cos(Angle);
+    printf("Before rotation- Yellow\nAfter rotation -White\nAngle of rotation: %f", thita);
+    triangle(a1, b1, a2, b2, a3, b3);
+}
+
+void main()
+{
+    int gd = DETECT, gm;
+    int x1, y1, x2, y2, x3, y3;
+    float Angle;
+
+    clrscr();
+
+    printf("Enter the coordinates of first point: ");
+    scanf("%d %d", &x1, &y1);
+    printf("Enter the coordinates of second point: ");
+    scanf("%d %d", &x2, &y2);
+    printf("Enter the coordinates of third point: ");
+    scanf("%d %d", &x3, &y3);
+    printf("Enter the angle for rotation:");
+    scanf("%f", &Angle);
+
+    initgraph(&gd, &gm, "C:\\TURBOC3\\BGI");
+
+    triangle(x1, y1, x2, y2, x3, y3);
+    getch();
+
+    cleardevice();
+    Rotate(x1, y1, x2, y2, x3, y3, Angle);
+
+    setcolor(14); // YELLOW
+    triangle(x1, y1, x2, y2, x3, y3);
+    getch();
+}
